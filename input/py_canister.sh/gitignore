@@ -1,0 +1,7 @@
+# .gitignore
+*.py[cod]
+*$py.class
+# For emacs backup file
+*~
+lib/python/site-packages/*
+!____GIT_DUMMYNAME____

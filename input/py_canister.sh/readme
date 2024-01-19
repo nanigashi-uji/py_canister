@@ -1,0 +1,102 @@
+#
+# ____TITLE____
+#
+
+Skeleton for small portable tools by python script
+
+- Contents:
+
+  1.  ____README_NAME____:                           This file
+  2.  bin/____MNGSCRIPT_NAME____:                       Symblic link to '____SHSCRIPT_ENTITY_NAME____' for installing Python modules by pip locally.
+  2a. bin/____MNGSCRIPT_NAME____2:                      Same as above using pip2 as default
+  2b. bin/____MNGSCRIPT_NAME____3:                      Same as above using pip3 as default
+
+  3.  bin/____SHSCRIPT_ENTITY_NAME____:                    Wrapper bash script to invoke Python script. (Entity)
+
+  4.  lib/python/site-packages:            Directory where python modules are stored
+
+  5.  lib/python/____SCRIPTNAME____.py:         Example Python script that use modules
+  5a. lib/python/____SCRIPTNAME____2.py:        Same as above using python2 as default
+  5b. lib/python/____SCRIPTNAME____3.py:        Same as above using python3 as default
+@
+  6.  bin/____SCRIPTNAME____:                   Symbolic link to '____SHSCRIPT_ENTITY_NAME____' to invoke ____SCRIPTNAME____.py.
+  6a. bin/____SCRIPTNAME____2:                  Same as above using python2 as default
+  6b. bin/____SCRIPTNAME____3:                  Same as above using python3 as default
+@
+  7.  .gitignore:                          Git-related file
+  8.  lib/python/site-packages/____GITDUMMYFILE____:   Git-related file to keep modules directory in repository.
+  
+- Usage (Procedure for adding new script):
+
+  1. Put new script under 'lib/python'.
+
+     Example: 'lib/python/{newscriptname}.py'
+
+  2. Make symbolic link to 'bin/____SHSCRIPT_ENTITY_NAME____' with same basename as the
+     basename of new script.
+
+      Example: 'bin/{newscriptname}' --> ____SHSCRIPT_ENTITY_NAME____
+
+  3. Download external python module by './bin/____MNGSCRIPT_NAME____'
+
+      Example: 'lib/python/{newscriptname}.py' uses modules, pytz and tzlocal.
+
+      % ./bin/____MNGSCRIPT_NAME____ pytz tzlocal
+
+      To install python module by specifying python/pip version,
+      invoke '____MNGSCRIPT_NAME____2' or '____MNGSCRIPT_NAME____3'.
+
+  4. Invoke the symbolic link made in step.2 for execute the script.
+
+      % ./bin/{newscriptname}
+
+- Caution:
+
+  - Do not put python scripts/modules that are not managed by pip
+    under 'lib/python/site-packages'.
+
+    Otherwise those scripts/modules will be removed by
+    `./bin/____MNGSCRIPT_NAME____ distclean`
+
+- Note:
+
+  - Python executable is seeked by the following order.
+
+    1. Environmental variable: PYTHON
+    2. Shebang in called python script
+    3. python3 in PATH
+    4. python  in PATH
+
+    If you want to use python2 in prior instead of python3,
+    change the value of shell variable \$\{python_major_version_default\}
+    at the beginning of "____SHSCRIPT_ENTITY_NAME____"
+
+    In other examples ({newscriptname}2.py, {newscriptname}3.py) are
+    specifying the python version at the shebang (1st-line).
+    It can be override by Environmental variable: PYTHON.
+
+  - pip command is seeked by the following order.
+
+    1. Environmental variable: PIP
+    2. pip2 in PATH for "____MNGSCRIPT_NAME____2"
+       pip3 in PATH for "____MNGSCRIPT_NAME____3"
+    3. pip3 in PATH
+    4. pip  in PATH
+
+    If you want to use pip2 in prior instead of pip3 by "____MNGSCRIPT_NAME____",
+    change the value of shell variable ${python_major_version_default}
+    at the beginning of "____SHSCRIPT_ENTITY_NAME____"
+
+- Requirements (Tools used in "____SHSCRIPT_ENTITY_NAME____")
+
+  - bash
+  - grep
+  - sed
+  - awk
+  - GNU realpath (in GNU coreutils)
+  - Python, PIP
+
+- Author
+
+  - ____AUTHOR_NAME____ (____AUTHOR_EMAIL____)
+
