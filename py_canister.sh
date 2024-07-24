@@ -369,11 +369,12 @@ function py_canister () {
             while getopts "${optchoice}" OPT ; do
                 case ${OPT} in
                     p) prefix="${OPTARG}"
-                       local rp_prefix="$("${_realpathcmd}" "${prefix}")"
-                       if [ "${rp_prefix%/}/bin" == "${this_loc_path%/}" ]; then
-                           flg_inplace=1
-                       else
-                           flg_inplace=0
+                       flg_inplace=0
+                       if [ -e "${prefix}" ]; then
+                           local rp_prefix="$("${_realpathcmd}" "${prefix}")"
+                           if [ "${rp_prefix%/}/bin" == "${this_loc_path%/}" ]; then
+                               flg_inplace=1
+                           fi
                        fi
                        ;;
                     i) pip_cmd="${OPTARG}"
