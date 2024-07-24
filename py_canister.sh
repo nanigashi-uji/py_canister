@@ -950,11 +950,11 @@ END {
                     local pipopt="--dest ${module_dir%/}/${pip_pyver}"
                 fi
                 if [ ${opt_verbose:-0} -ne 0 ]; then
-                    echo "${subcmd} module : $@"
-                    echo "${pip_path} ${subcmd} ${pipopt} ${@}"
+                    echo "${subcmd} module : ${subcmd_args[@]}"
+                    echo "${pip_path} ${subcmd} ${pipopt} ${subcmd_args[@]}"
                 fi
                 if [ ${opt_dryrun:-0} -eq 0 ]; then
-                    "${pip_path}" ${subcmd} ${pipopt} "${@}"
+                    "${pip_path}" ${subcmd} ${pipopt} "${subcmd_args[@]}"
                 fi
                 cleanup
                 return
@@ -962,10 +962,10 @@ END {
             clean)
                 if [ ${opt_verbose:-0} -ne 0 ]; then
                     echo "Clean"
-                    echo "exec rm -rf \"${@}\" \"${module_dir%/}/${pip_pyver%/}\""
+                    echo "exec rm -rf \"${subcmd_args[@]}\" \"${module_dir%/}/${pip_pyver%/}\""
                 fi
                 if [ ${opt_dryrun:-0} -eq 0 ]; then
-                    rm -rf "${@}" "${module_dir%/}/${pip_pyver%/}"
+                    rm -rf "${subcmd_args[@]}" "${module_dir%/}/${pip_pyver%/}"
                     cleanup
                     return 0
                 fi
@@ -973,10 +973,10 @@ END {
             distclean|allclean|cleanall)
                 if [ ${opt_verbose:-0} -ne 0 ]; then
                     echo "Distclean"
-                    echo "exec rm -rf \"${@}\" \"${module_dir}\"/\*"
+                    echo "exec rm -rf \"${subcmd_args[@]}\" \"${module_dir}\"/\*"
                 fi
                 if [ ${opt_dryrun:-0} -eq 0 ]; then
-                    rm -rf "${@}" "${module_dir}"/*
+                    rm -rf "${subcmd_args[@]}" "${module_dir}"/*
                     cleanup
                     return
                 fi
