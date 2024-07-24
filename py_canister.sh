@@ -511,6 +511,7 @@ function py_canister () {
 
         local bindir="${prefix%/}/${bin_subdir%/}"
         local script_dir="${prefix%/}/${script_subdir%/}"
+        local bytecode_dir="${prefix%/}/${script_subdir%/}/__pycache__"
         local module_dir="${script_dir%/}/${module_subdir%/}"
         
         #
@@ -963,10 +964,10 @@ END {
             clean)
                 if [ ${opt_verbose:-0} -ne 0 ]; then
                     echo "Clean"
-                    echo "exec rm -rf \"${subcmd_args[@]}\" \"${module_dir%/}/${pip_pyver%/}\""
+                    echo "exec rm -rf \"${subcmd_args[@]}\" \"${module_dir%/}/${pip_pyver%/}\" \"${bytecode_dir}\""
                 fi
                 if [ ${opt_dryrun:-0} -eq 0 ]; then
-                    rm -rf "${subcmd_args[@]}" "${module_dir%/}/${pip_pyver%/}"
+                    rm -rf "${subcmd_args[@]}" "${module_dir%/}/${pip_pyver%/}" "${bytecode_dir%/}"
                     cleanup
                     return 0
                 fi
@@ -974,10 +975,10 @@ END {
             distclean|allclean|cleanall)
                 if [ ${opt_verbose:-0} -ne 0 ]; then
                     echo "Distclean"
-                    echo "exec rm -rf \"${subcmd_args[@]}\" \"${module_dir}\"/\*"
+                    echo "exec rm -rf \"${subcmd_args[@]}\" \"${module_dir}\"/\* \"${bytecode_dir}\""
                 fi
                 if [ ${opt_dryrun:-0} -eq 0 ]; then
-                    rm -rf "${subcmd_args[@]}" "${module_dir}"/*
+                    rm -rf "${subcmd_args[@]}" "${module_dir}"/*  "${bytecode_dir%/}"
                     cleanup
                     return
                 fi
