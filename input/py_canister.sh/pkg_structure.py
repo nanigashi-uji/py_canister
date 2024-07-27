@@ -540,6 +540,27 @@ class PkgStructure(object):
                                  os.path.join(self.statetmpdir,self.pkg_info['pkg_name'])
                                  if len(self.pkg_info['pkg_name'])>0 else self.statetmpdir)
 
+    def get(self, key):
+        return self.pkg_info.get(key)
+
+    def items(self):
+        return self.pkg_info.items()
+
+    def __len__(self):
+        return len(self.pkg_info)
+
+    def __getitem__(self, key):
+        return self.pkg_info.__getitem__(key)
+
+    def __setitem__(self, key, value):
+        return self.pkg_info.__setitem__(key, value)
+
+    def __delitem__(self, key):
+        return self.pkg_info.__delitem__(key, value)
+
+    def __missing__(self, key):
+        return self.pkg_info.__missing__(key, value)
+
     def __repr__(self):
         return json.dumps(self.pkg_info, ensure_ascii=False, indent=4, sort_keys=True)
 
